@@ -101,6 +101,26 @@
 
         </div>
 
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>NO</th>
+                        <th>로그인 일자</th>
+                        <th>접속 IP</th>
+                        <th>접속 UserAgent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="history, historyStat : ${loginHistories}">
+                    <td th:text="${historyStat.index + 1}"/>
+                    <td th:text="${#temporals.format(history.loginAt, 'yyyy.MM.dd HH:mm')}"/>
+                    <td th:text="${history.ip}"/>
+                    <td th:text="${history.userAgent}"/>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
     </div>
 

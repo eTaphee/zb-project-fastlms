@@ -1,6 +1,7 @@
 package com.zerobase.fastlms.admin.controller;
 
 
+import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
 import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.admin.model.MemberInput;
@@ -20,7 +21,7 @@ import java.util.List;
 public class AdminMemberController extends BaseController {
     
     private final MemberService memberService;
-    
+
     @GetMapping("/admin/member/list.do")
     public String list(Model model, MemberParam parameter) {
         
@@ -47,8 +48,11 @@ public class AdminMemberController extends BaseController {
         parameter.init();
         
         MemberDto member = memberService.detail(parameter.getUserId());
+        List<LoginHistoryDto> loginHistories = memberService.getLoginHistories(member.getUserId());
+
         model.addAttribute("member", member);
-       
+        model.addAttribute("loginHistories", loginHistories);
+
         return "admin/member/detail";
     }
     

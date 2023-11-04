@@ -1,5 +1,6 @@
 package com.zerobase.fastlms.member.service.impl;
 
+import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
 import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.admin.mapper.MemberMapper;
 import com.zerobase.fastlms.admin.model.MemberParam;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -307,8 +309,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     @Override
     public void saveSuccessLoginLog(String userId, String userAgent, String ip) {
-        Member member = memberRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("회원 정보가 존재하지 않습니다."));
+        Member member = findMemberById(userId);
 
         LoginHistory saved = loginHistoryRepository.save(LoginHistory.builder()
                 .member(member)
@@ -318,6 +319,22 @@ public class MemberServiceImpl implements MemberService {
 
         member.setLastLoginDt(saved.getLoginAt());
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<LoginHistoryDto> getLoginHistories(String userId) {
+        Member member = findMemberById(userId);
+        return loginHistoryRepository.findAllByMemberUserId(member.getUserId())
+                .stream()
+                .map(LoginHistoryDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    private Member findMemberById(String userId) {
+        return memberRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("회원 정보가 존재하지 않습니다."));
+    }
+
 }
 
 

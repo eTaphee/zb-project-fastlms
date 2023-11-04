@@ -29,5 +29,5 @@ public class LoginHistory {
     private String userAgent;
 
     @CreatedDate
-    private LocalDateTime LoginAt;
+    private LocalDateTime loginAt;
 }

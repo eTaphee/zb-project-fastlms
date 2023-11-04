@@ -1,5 +1,6 @@
 package com.zerobase.fastlms.member.service;
 
+import com.zerobase.fastlms.admin.dto.LoginHistoryDto;
 import com.zerobase.fastlms.admin.dto.MemberDto;
 import com.zerobase.fastlms.admin.model.MemberParam;
 import com.zerobase.fastlms.course.model.ServiceResult;
@@ -60,4 +61,6 @@ public interface MemberService extends UserDetailsService {
     ServiceResult withdraw(String userId, String password);
 
     void saveSuccessLoginLog(String userId, String userAgent, String ip);
+
+    List<LoginHistoryDto> getLoginHistories(String userId);
 }
