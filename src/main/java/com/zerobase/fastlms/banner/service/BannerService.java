@@ -55,6 +55,14 @@ public class BannerService {
         return bannerList;
     }
 
+    @Transactional(readOnly = true)
+    public List<BannerDto> listForSlide() {
+        return bannerRepository.findAllByShowYnOrderByOrderIndex(true)
+                .stream()
+                .map(BannerDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public boolean del(String idList) {
         if (idList != null && !idList.isEmpty()) {

@@ -35,7 +35,7 @@
 </head>
 <body>
 <!--<div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>-->
-<h1>배너 관리 - 배너 등록</h1>
+<h1 th:text="${editMode} ? '배너 관리 - 배너 수정' : '배너 관리 - 배너 등록'"/>
 
 <div class="detail">
 
