@@ -58,4 +58,6 @@ public interface MemberService extends UserDetailsService {
      * 회원을 탈퇴시켜 주는 로직
      */
     ServiceResult withdraw(String userId, String password);
+
+    void saveSuccessLoginLog(String userId, String userAgent, String ip);
 }
